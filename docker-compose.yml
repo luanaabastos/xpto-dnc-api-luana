@@ -1,0 +1,28 @@
+volumes:
+  mysqldata:
+
+
+services:
+
+  api:
+    build: .
+    environment:
+      - SECRET_KEY=DOCKER_DEV_SECRET
+      - DB_DATABASE=shifts
+      - DB_USERNAME=xpto-user
+      - DB_PASSWORD=xpto-pass
+      - DB_HOST=db
+    ports:
+      - 3000:3000
+
+  db:
+    image: mysql:8
+    volumes:
+      - mysqldata:/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=shifts
+      - MYSQL_USER=xpto-user
+      - MYSQL_PASSWORD=xpto-pass
+    ports:
+      - 3306:3306
